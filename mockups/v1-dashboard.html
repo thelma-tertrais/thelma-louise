@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thelma &amp; Louise — Le Films du Losange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF3F7;
+    --surface:#FFFFFF;
+    --surface-alt:#F4F8FA;
+    --line:#D7E2EA;
+    --line-soft:#E6EDF2;
+    --blue:#4C7FA3;
+    --blue-deep:#2F5A78;
+    --blue-soft:rgba(76,127,163,0.10);
+    --ink:#1F2B33;
+    --ink-dim:#5E6E78;
+    --ink-faint:#93A2AB;
+    --green:#4F8F68;
+    --green-soft:rgba(79,143,104,0.12);
+    --amber:#B4812C;
+    --amber-soft:rgba(180,129,44,0.12);
+    --red:#B85B42;
+    --red-soft:rgba(184,91,66,0.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:14px;
+    line-height:1.5;
+    min-height:100vh;
+  }
+  ::selection{background:var(--blue-soft);color:var(--blue-deep);}
+  a{color:inherit;}
+  button{font-family:inherit;cursor:pointer;}
+  input{font-family:inherit;}
+  :focus-visible{outline:2px solid var(--blue-deep);outline-offset:2px;}
+
+  .app{display:flex;min-height:100vh;}
+
+  /* SIDEBAR */
+  .sidebar{
+    width:236px;
+    flex-shrink:0;
+    background:var(--surface);
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  .sidebar::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    width:5px;
+    background-image:repeating-linear-gradient(
+      to bottom,
+      var(--line) 0px, var(--line) 8px,
+      transparent 8px, transparent 20px
+    );
+  }
+  .brand{
+    padding:28px 24px 22px 30px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .brand-mark{
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .brand-icon{color:var(--blue);flex-shrink:0;}
+  .brand-name{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:20px;
+    letter-spacing:0.005em;
+    color:var(--ink);
+  }
+  .brand-sub{
+    margin-top:9px;
+    font-size:12px;
+    color:var(--ink-dim);
+  }
+  .nav{
+    padding:20px 14px;
+    flex:1;
+  }
+  .nav-group{margin-bottom:22px;}
+  .nav-label{
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--ink-faint);
+    padding:0 12px 8px;
+  }
+  .nav-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    padding:9px 12px;
+    border:none;
+    background:transparent;
+    border-radius:5px;
+    color:var(--ink-dim);
+    font-size:13.5px;
+    text-align:left;
+    transition:background .12s ease, color .12s ease;
+  }
+  .nav-item:hover{background:var(--surface-alt);color:var(--ink);}
+  .nav-item.active{background:var(--blue-soft);color:var(--blue-deep);}
+  .nav-ico{width:15px;height:15px;flex-shrink:0;opacity:0.85;}
+  .sidebar-foot{
+    padding:16px 24px 22px 30px;
+    border-top:1px solid var(--line-soft);
+    font-size:12px;
+    color:var(--ink-faint);
+  }
+
+  /* MAIN */
+  .main{flex:1;min-width:0;display:flex;flex-direction:column;}
+  .topbar{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    padding:30px 40px 20px;
+    border-bottom:1px solid var(--line-soft);
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .topbar h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;
+    margin:0 0 4px;
+    color:var(--ink);
+  }
+  .topbar p{
+    margin:0;
+    font-size:13px;
+    color:var(--ink-dim);
+    max-width:46ch;
+  }
+  .topbar-actions{display:flex;gap:10px;align-items:center;}
+  .search{
+    display:flex;align-items:center;gap:8px;
+    background:var(--surface-alt);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:8px 12px;
+    min-width:220px;
+  }
+  .search input{
+    background:none;border:none;color:var(--ink);
+    font-size:13px;flex:1;outline:none;
+  }
+  .search input::placeholder{color:var(--ink-faint);}
+  .search svg{width:14px;height:14px;color:var(--ink-faint);flex-shrink:0;}
+  .btn{
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink);
+    padding:8px 16px;
+    border-radius:5px;
+    font-size:13px;
+    font-weight:500;
+    transition:border-color .12s ease, background .12s ease;
+  }
+  .btn:hover{border-color:var(--blue);}
+  .btn-primary{
+    background:var(--blue-deep);
+    border-color:var(--blue-deep);
+    color:#FFFFFF;
+  }
+  .btn-primary:hover{background:var(--blue);border-color:var(--blue);}
+
+  .content{padding:28px 40px 60px;flex:1;}
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* STAT STRIP */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .stat{
+    background:var(--surface);
+    border:1px solid var(--line-soft);
+    border-radius:6px;
+    padding:18px 20px;
+  }
+  .stat-num{
+    font-family:'Fraunces',serif;
+    font-size:30px;
+    font-weight:500;
+    color:var(--ink);
+    line-height:1.1;
+  }
+  .stat-num.warn{color:var(--amber);}
+  .stat-label{
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-top:6px;
+  }
+
+  .row2{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:start;}
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--line-soft);
+    border-radius:6px;
+    overflow:hidden;
+  }
+  .panel-head{
+    padding:16px 20px;
+    border-bottom:1px solid var(--line-soft);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .panel-head h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:16px;
+    margin:0;
+  }
+  .panel-head .tag{
+    font-size:11.5px;
+    color:var(--ink-faint);
+  }
+
+  /* TABLE */
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{
+    text-align:left;
+    font-weight:500;
+    color:var(--ink-faint);
+    font-size:11.5px;
+    letter-spacing:0.03em;
+    padding:10px 20px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  td{
+    padding:12px 20px;
+    border-bottom:1px solid var(--line-soft);
+    color:var(--ink);
+    vertical-align:middle;
+  }
+  tbody tr{transition:background .1s ease;}
+  tbody tr.clickable{cursor:pointer;}
+  tbody tr.clickable:hover{background:var(--surface-alt);}
+  tbody tr:last-child td{border-bottom:none;}
+  .film-title{font-weight:500;}
+  .muted{color:var(--ink-dim);}
+
+  .pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11.5px;
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+  .pill.ok{background:var(--green-soft);color:var(--green);}
+  .pill.ok .pill-dot{background:var(--green);}
+  .pill.warn{background:var(--amber-soft);color:var(--amber);}
+  .pill.warn .pill-dot{background:var(--amber);}
+  .pill.bad{background:var(--red-soft);color:var(--red);}
+  .pill.bad .pill-dot{background:var(--red);}
+
+  /* Festival list card */
+  .fest-list{padding:6px 0;}
+  .fest-item{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 20px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .fest-item:last-child{border-bottom:none;}
+  .fest-name{font-weight:500;font-size:13px;}
+  .fest-film{font-size:12px;color:var(--ink-dim);margin-top:2px;}
+
+  /* Filter chips */
+  .chips{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+  .chip{
+    padding:7px 14px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    background:var(--surface);
+    color:var(--ink-dim);
+    font-size:12.5px;
+  }
+  .chip.active{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-deep);}
+  .chip:hover:not(.active){border-color:var(--ink-faint);color:var(--ink);}
+
+  /* Drawer */
+  .scrim{
+    position:fixed;inset:0;
+    background:rgba(20,32,40,0.38);
+    opacity:0;pointer-events:none;
+    transition:opacity .18s ease;
+    z-index:40;
+  }
+  .scrim.open{opacity:1;pointer-events:auto;}
+  .drawer{
+    position:fixed;top:0;right:0;bottom:0;
+    width:420px;max-width:92vw;
+    background:var(--surface);
+    border-left:1px solid var(--line);
+    transform:translateX(100%);
+    transition:transform .2s ease;
+    z-index:41;
+    display:flex;flex-direction:column;
+  }
+  .drawer.open{transform:translateX(0);}
+  .drawer-head{
+    padding:24px 26px 18px;
+    border-bottom:1px solid var(--line-soft);
+    display:flex;justify-content:space-between;align-items:flex-start;
+  }
+  .drawer-title{font-family:'Fraunces',serif;font-size:21px;font-weight:500;margin:0 0 6px;}
+  .drawer-sub{font-size:12.5px;color:var(--ink-dim);}
+  .drawer-close{
+    background:none;border:none;color:var(--ink-faint);
+    width:28px;height:28px;border-radius:5px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .drawer-close:hover{background:var(--surface-alt);color:var(--ink);}
+  .drawer-body{padding:20px 26px;overflow-y:auto;flex:1;}
+  .drawer-section-label{
+    font-size:11.5px;color:var(--ink-faint);
+    letter-spacing:0.03em;
+    margin:0 0 10px;
+  }
+  .right-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:11px 0;border-bottom:1px solid var(--line-soft);
+    font-size:13px;
+  }
+  .right-row:last-child{border-bottom:none;}
+  .right-territory{font-weight:500;}
+  .right-meta{font-size:12px;color:var(--ink-dim);margin-top:2px;}
+
+  @media (max-width:960px){
+    .sidebar{width:64px;}
+    .brand-sub, .nav-label, .nav-item span.label{display:none;}
+    .nav-item{justify-content:center;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .row2{grid-template-columns:1fr;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg class="brand-icon" width="19" height="19" viewBox="0 0 24 24" fill="none">
+          <rect x="5" y="5" width="14" height="14" rx="2" transform="rotate(45 12 12)" stroke="currentColor" stroke-width="1.7"/>
+        </svg>
+        <span class="brand-name">Thelma &amp; Louise</span>
+      </div>
+      <div class="brand-sub">Gestion des droits pour Le Films du Losange</div>
+    </div>
+    <nav class="nav">
+      <div class="nav-group">
+        <div class="nav-label">Pilotage</div>
+        <button class="nav-item active" data-view="dashboard">
+          <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="11" width="8" height="10" rx="1"/><rect x="3" y="14" width="8" height="7" rx="1"/></svg>
+          <span class="label">Tableau de bord</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">Catalogue</div>
+        <button class="nav-item" data-view="catalogue">
+          <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M9 4v16"/></svg>
+          <span class="label">Films &amp; droits</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">Commercial</div>
+        <button class="nav-item" data-view="ventes">
+          <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
+          <span class="label">Ventes</span>
+        </button>
+      </div>
+      <div class="nav-group">
+        <div class="nav-label">Promotion</div>
+        <button class="nav-item" data-view="festivals">
+          <svg class="nav-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M12 6v6l4 2"/></svg>
+          <span class="label">Festivals</span>
+        </button>
+      </div>
+    </nav>
+    <div class="sidebar-foot">Maquette de démonstration</div>
+  </aside>
+
+  <div class="main">
+
+    <div class="topbar" id="topbar">
+      <div>
+        <h1 id="view-title">Tableau de bord</h1>
+        <p id="view-sub">Vue d'ensemble du catalogue, des échéances de droits et de l'activité commerciale.</p>
+      </div>
+      <div class="topbar-actions" id="topbar-actions">
+        <div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><input placeholder="Rechercher un film, un territoire..."></div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="view active" id="view-dashboard">
+        <div class="stats">
+          <div class="stat"><div class="stat-num">128</div><div class="stat-label">Films actifs au catalogue</div></div>
+          <div class="stat"><div class="stat-num warn">7</div><div class="stat-label">Droits expirant sous 30 jours</div></div>
+          <div class="stat"><div class="stat-num">€142 300</div><div class="stat-label">Chiffre d'affaires du mois</div></div>
+          <div class="stat"><div class="stat-num">3</div><div class="stat-label">Festivals en cours</div></div>
+        </div>
+
+        <div class="row2">
+          <div class="panel">
+            <div class="panel-head"><h2>Droits arrivant à échéance</h2><span class="tag">7 au total</span></div>
+            <table>
+              <thead><tr><th>Film</th><th>Territoire</th><th>Licencié</th><th>Échéance</th><th>Statut</th></tr></thead>
+              <tbody id="dash-rights"></tbody>
+            </table>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:18px;">
+            <div class="panel">
+              <div class="panel-head"><h2>Festivals en cours</h2></div>
+              <div class="fest-list" id="dash-festivals"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CATALOGUE -->
+      <section class="view" id="view-catalogue">
+        <div class="chips">
+          <button class="chip active">Tous</button>
+          <button class="chip">Droits actifs</button>
+          <button class="chip">Échéance proche</button>
+          <button class="chip">Expirés</button>
+        </div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>Film</th><th>Année</th><th>Genre</th><th>Territoires actifs</th><th>Prochaine échéance</th><th>Statut</th></tr></thead>
+            <tbody id="cat-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- VENTES -->
+      <section class="view" id="view-ventes">
+        <div class="panel">
+          <table>
+            <thead><tr><th>Date</th><th>Film</th><th>Territoire</th><th>Licencié</th><th>Type</th><th>Montant</th><th>Statut</th></tr></thead>
+            <tbody id="ventes-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- FESTIVALS -->
+      <section class="view" id="view-festivals">
+        <div class="panel">
+          <table>
+            <thead><tr><th>Festival</th><th>Film</th><th>Lieu</th><th>Date</th><th>Statut</th></tr></thead>
+            <tbody id="fest-table"></tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div>
+      <p class="drawer-title" id="drawer-title">Film</p>
+      <p class="drawer-sub" id="drawer-sub">Détail des droits</p>
+    </div>
+    <button class="drawer-close" id="drawer-close" aria-label="Fermer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="drawer-body">
+    <p class="drawer-section-label">Droits par territoire</p>
+    <div id="drawer-rights"></div>
+  </div>
+</div>
+
+<script>
+const films = [
+  {title:"Les Heures Bleues", year:2021, genre:"Drame", territories:["France","Allemagne","Benelux"], nextExpiry:"12 oct. 2026", status:"warn",
+    rights:[
+      {territory:"France", media:"TV / VOD", licensee:"Nordis Média", expiry:"12 oct. 2026", status:"warn"},
+      {territory:"Allemagne", media:"SVOD", licensee:"CineWave GmbH", expiry:"03 mars 2027", status:"ok"},
+      {territory:"Benelux", media:"Vidéo", licensee:"BeneluxScreen", expiry:"20 sept. 2025", status:"bad"},
+    ]},
+  {title:"Nord-Sud", year:2019, genre:"Thriller", territories:["Italie","Espagne"], nextExpiry:"04 nov. 2026", status:"warn",
+    rights:[
+      {territory:"Italie", media:"TV", licensee:"Panorama Distribuzione", expiry:"04 nov. 2026", status:"warn"},
+      {territory:"Espagne", media:"VOD", licensee:"Vista Iberia", expiry:"18 juin 2027", status:"ok"},
+    ]},
+  {title:"La Traversée Immobile", year:2022, genre:"Drame", territories:["États-Unis","Japon"], nextExpiry:"29 janv. 2028", status:"ok",
+    rights:[
+      {territory:"États-Unis", media:"SVOD", licensee:"Silver Reel US", expiry:"29 janv. 2028", status:"ok"},
+      {territory:"Japon", media:"Théâtrique", licensee:"Tokyo Kinema", expiry:"14 mai 2027", status:"ok"},
+    ]},
+  {title:"Sables", year:2020, genre:"Documentaire", territories:["Scandinavie"], nextExpiry:"02 sept. 2025", status:"bad",
+    rights:[{territory:"Scandinavie", media:"TV", licensee:"Aurora Streaming", expiry:"02 sept. 2025", status:"bad"}]},
+  {title:"Vertige Ordinaire", year:2023, genre:"Comédie dramatique", territories:["France","Royaume-Uni"], nextExpiry:"11 déc. 2026", status:"ok",
+    rights:[
+      {territory:"France", media:"Théâtrique / VOD", licensee:"Le Films du Losange", expiry:"—", status:"ok"},
+      {territory:"Royaume-Uni", media:"VOD", licensee:"Polar Vision", expiry:"11 déc. 2026", status:"ok"},
+    ]},
+  {title:"Le Dernier Ferry", year:2018, genre:"Drame", territories:["Amérique Latine"], nextExpiry:"27 oct. 2026", status:"warn",
+    rights:[{territory:"Amérique Latine", media:"SVOD", licensee:"Andes Films", expiry:"27 oct. 2026", status:"warn"}]},
+  {title:"Chambre 12", year:2024, genre:"Thriller", territories:["France","Allemagne","Italie"], nextExpiry:"09 avr. 2028", status:"ok",
+    rights:[
+      {territory:"France", media:"Théâtrique", licensee:"Le Films du Losange", expiry:"—", status:"ok"},
+      {territory:"Allemagne", media:"VOD", licensee:"CineWave GmbH", expiry:"09 avr. 2028", status:"ok"},
+      {territory:"Italie", media:"TV", licensee:"Panorama Distribuzione", expiry:"22 juil. 2027", status:"ok"},
+    ]},
+  {title:"Marée Basse", year:2017, genre:"Drame", territories:["Benelux"], nextExpiry:"15 sept. 2025", status:"bad",
+    rights:[{territory:"Benelux", media:"Vidéo", licensee:"BeneluxScreen", expiry:"15 sept. 2025", status:"bad"}]},
+  {title:"Les Insulaires", year:2022, genre:"Documentaire", territories:["Espagne","Royaume-Uni"], nextExpiry:"30 nov. 2026", status:"warn",
+    rights:[
+      {territory:"Espagne", media:"VOD", licensee:"Vista Iberia", expiry:"30 nov. 2026", status:"warn"},
+      {territory:"Royaume-Uni", media:"TV", licensee:"Polar Vision", expiry:"05 févr. 2027", status:"ok"},
+    ]},
+  {title:"Combustion Lente", year:2021, genre:"Drame", territories:["États-Unis"], nextExpiry:"19 août 2027", status:"ok",
+    rights:[{territory:"États-Unis", media:"SVOD", licensee:"Silver Reel US", expiry:"19 août 2027", status:"ok"}]},
+];
+
+const ventes = [
+  {date:"28 août 2026", film:"Chambre 12", territory:"Allemagne", licensee:"CineWave GmbH", type:"VOD", amount:"€18 400", status:"ok", label:"Payé"},
+  {date:"25 août 2026", film:"Les Heures Bleues", territory:"France", licensee:"Nordis Média", type:"TV", amount:"€32 000", status:"warn", label:"Facturé"},
+  {date:"21 août 2026", film:"Vertige Ordinaire", territory:"Royaume-Uni", licensee:"Polar Vision", type:"VOD", amount:"€9 750", status:"ok", label:"Payé"},
+  {date:"19 août 2026", film:"Nord-Sud", territory:"Italie", licensee:"Panorama Distribuzione", type:"TV", amount:"€14 200", status:"warn", label:"En attente"},
+  {date:"14 août 2026", film:"Les Insulaires", territory:"Espagne", licensee:"Vista Iberia", type:"SVOD", amount:"€21 500", status:"ok", label:"Payé"},
+  {date:"09 août 2026", film:"Le Dernier Ferry", territory:"Amérique Latine", licensee:"Andes Films", type:"SVOD", amount:"€11 900", status:"warn", label:"Facturé"},
+  {date:"03 août 2026", film:"La Traversée Immobile", territory:"États-Unis", licensee:"Silver Reel US", type:"SVOD", amount:"€46 000", status:"ok", label:"Payé"},
+  {date:"29 juil. 2026", film:"Sables", territory:"Scandinavie", licensee:"Aurora Streaming", type:"TV", amount:"€6 300", status:"bad", label:"Retard"},
+];
+
+const festivals = [
+  {name:"Festival de Deauville", film:"Chambre 12", place:"Deauville, FR", date:"14 sept. 2026", status:"warn", label:"Soumis"},
+  {name:"Rotterdam IFFR", film:"Les Insulaires", place:"Rotterdam, NL", date:"26 janv. 2027", status:"warn", label:"Soumis"},
+  {name:"San Sebastián", film:"Nord-Sud", place:"Saint-Sébastien, ES", date:"18 sept. 2026", status:"ok", label:"Sélectionné"},
+  {name:"Göteborg Film Festival", film:"Sables", place:"Göteborg, SE", date:"29 janv. 2027", status:"bad", label:"Refusé"},
+  {name:"Karlovy Vary", film:"Vertige Ordinaire", place:"Karlovy Vary, CZ", date:"03 juil. 2026", status:"ok", label:"Sélectionné"},
+  {name:"Busan IFF", film:"La Traversée Immobile", place:"Busan, KR", date:"01 oct. 2026", status:"warn", label:"Soumis"},
+];
+
+function pill(status, label){
+  return `<span class="pill ${status}"><span class="pill-dot"></span>${label}</span>`;
+}
+const statusLabel = {ok:"Actif", warn:"Échéance proche", bad:"Expiré"};
+
+function renderDashboard(){
+  const urgent = films.filter(f=>f.status!=="ok").slice(0,5).flatMap(f=>
+    f.rights.filter(r=>r.status!=="ok").map(r=>({...r, film:f.title}))
+  ).slice(0,6);
+  document.getElementById("dash-rights").innerHTML = urgent.map(r=>`
+    <tr><td class="film-title">${r.film}</td><td class="muted">${r.territory}</td><td class="muted">${r.licensee}</td><td>${r.expiry}</td><td>${pill(r.status, statusLabel[r.status])}</td></tr>
+  `).join("");
+
+  document.getElementById("dash-festivals").innerHTML = festivals.slice(0,4).map(f=>`
+    <div class="fest-item">
+      <div><div class="fest-name">${f.name}</div><div class="fest-film">${f.film} · ${f.place}</div></div>
+      ${pill(f.status, f.label)}
+    </div>
+  `).join("");
+}
+
+function renderCatalogue(){
+  document.getElementById("cat-table").innerHTML = films.map((f,i)=>`
+    <tr class="clickable" data-film="${i}">
+      <td class="film-title">${f.title}</td>
+      <td class="muted">${f.year}</td>
+      <td class="muted">${f.genre}</td>
+      <td class="muted">${f.territories.join(", ")}</td>
+      <td>${f.nextExpiry}</td>
+      <td>${pill(f.status, statusLabel[f.status])}</td>
+    </tr>
+  `).join("");
+  document.querySelectorAll("#cat-table tr").forEach(tr=>{
+    tr.addEventListener("click", ()=>openDrawer(films[tr.dataset.film]));
+  });
+}
+
+function renderVentes(){
+  document.getElementById("ventes-table").innerHTML = ventes.map(v=>`
+    <tr><td class="muted">${v.date}</td><td class="film-title">${v.film}</td><td class="muted">${v.territory}</td><td class="muted">${v.licensee}</td><td class="muted">${v.type}</td><td>${v.amount}</td><td>${pill(v.status, v.label)}</td></tr>
+  `).join("");
+}
+
+function renderFestivals(){
+  document.getElementById("fest-table").innerHTML = festivals.map(f=>`
+    <tr><td class="film-title">${f.name}</td><td class="muted">${f.film}</td><td class="muted">${f.place}</td><td>${f.date}</td><td>${pill(f.status, f.label)}</td></tr>
+  `).join("");
+}
+
+function openDrawer(film){
+  document.getElementById("drawer-title").textContent = film.title;
+  document.getElementById("drawer-sub").textContent = film.year + " · " + film.genre;
+  document.getElementById("drawer-rights").innerHTML = film.rights.map(r=>`
+    <div class="right-row">
+      <div>
+        <div class="right-territory">${r.territory}</div>
+        <div class="right-meta">${r.media} · ${r.licensee}</div>
+      </div>
+      ${pill(r.status, r.expiry === "—" ? "En exploitation" : r.expiry)}
+    </div>
+  `).join("");
+  document.getElementById("drawer").classList.add("open");
+  document.getElementById("scrim").classList.add("open");
+}
+function closeDrawer(){
+  document.getElementById("drawer").classList.remove("open");
+  document.getElementById("scrim").classList.remove("open");
+}
+document.getElementById("drawer-close").addEventListener("click", closeDrawer);
+document.getElementById("scrim").addEventListener("click", closeDrawer);
+
+const viewMeta = {
+  dashboard:{title:"Tableau de bord", sub:"Vue d'ensemble du catalogue, des échéances de droits et de l'activité commerciale."},
+  catalogue:{title:"Films & droits", sub:"Catalogue des films et matrice des droits par territoire et par média."},
+  ventes:{title:"Ventes", sub:"Suivi des ventes de droits, tous territoires et types de diffusion confondus."},
+  festivals:{title:"Festivals", sub:"Suivi des soumissions et sélections en festival."},
+};
+
+document.querySelectorAll(".nav-item").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".nav-item").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    const view = btn.dataset.view;
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+    document.getElementById("view-"+view).classList.add("active");
+    document.getElementById("view-title").textContent = viewMeta[view].title;
+    document.getElementById("view-sub").textContent = viewMeta[view].sub;
+  });
+});
+
+renderDashboard();
+renderCatalogue();
+renderVentes();
+renderFestivals();
+</script>
+
+</body>
+</html>
