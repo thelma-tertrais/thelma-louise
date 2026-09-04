@@ -3,19 +3,24 @@
 ## Non publié
 
 ### Ajouté
-- `mockups/v7-dashboard.html` : les lignes de "Suivi des factures" sont cliquables
-  et ouvrent un tiroir avec :
-  - une timeline verticale des étapes (émission, envoi, rappels, échéance,
-    relances, paiement), avec l'étape en cours mise en évidence
-  - un interrupteur "Relance automatique" (activable/désactivable), avec un texte
-    qui se met à jour en direct selon l'état
+- `mockups/v8-dashboard.html` : dans le tiroir "Suivi des factures", un champ
+  mots-clés + bouton "Générer le mail" qui compose un objet et un corps de mail de
+  relance, avec bouton "Copier le texte"
+  - mots-clés reconnus : ton ferme/sévère, urgent, pénalités/intérêts, délai/
+    échelonnement, ton amical/cordial — chacun modifie le texte généré
+  - tout mot-clé non reconnu est repris tel quel dans une ligne "Points
+    supplémentaires à mentionner"
 
 ### Note de portée
-- L'interrupteur est purement visuel dans la maquette (état gardé en mémoire le
-  temps de la session, pas persisté). La vraie automatisation des relances (envoi
-  d'email programmé) reste un développement backend réel — phase 6 de la roadmap.
+- Génération basée sur des règles/templates, pas un vrai appel à un modèle de
+  langage : le fichier est ouvert en local, sans connexion à une IA. La vraie
+  version brancherait ceci sur un LLM pour un texte plus naturel et plus flexible
+  face à des mots-clés imprévus — phase 6 de la roadmap.
 
 ## Précédent
+
+### v7
+- Timeline de suivi de facture + interrupteur de relance automatique
 
 ### v6
 - Fix : ouverture du PDF du contrat via Blob au lieu d'une data URI directe
