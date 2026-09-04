@@ -1,9 +1,5 @@
 # Roadmap
 
-Projet solo, remplacement progressif d'AVEDIS module par module. Estimation totale
-pour une parité complète : 2 à 3 ans, en construisant chaque module comme un outil
-utilisable seul avant de passer au suivant.
-
 ## Phase 0 — Cadrage & maquette (en cours)
 
 - [x] Analyse de l'outil existant (AVEDIS) et de son organisation par modules

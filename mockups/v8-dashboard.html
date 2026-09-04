@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thelma &amp; Louise — Le Films du Losange</title>
+<title>Thelma &amp; Louise — Les Films du Losange</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -410,7 +410,7 @@
         </svg>
         <span class="brand-name">Thelma &amp; Louise</span>
       </div>
-      <div class="brand-sub">Gestion des droits pour Le Films du Losange</div>
+      <div class="brand-sub">Gestion des droits pour Les Films du Losange</div>
     </div>
     <nav class="nav">
       <div class="nav-group">
@@ -636,14 +636,14 @@ const films = [
     rights:[{territory:"Scandinavie", media:"TV", licensee:"Aurora Streaming", expiry:"02 sept. 2025", status:"bad"}]},
   {title:"Vertige Ordinaire", year:2023, genre:"Comédie dramatique", territories:["France","Royaume-Uni"], nextExpiry:"11 déc. 2026", status:"ok",
     rights:[
-      {territory:"France", media:"Théâtrique / VOD", licensee:"Le Films du Losange", expiry:"—", status:"ok"},
+      {territory:"France", media:"Théâtrique / VOD", licensee:"Les Films du Losange", expiry:"—", status:"ok"},
       {territory:"Royaume-Uni", media:"VOD", licensee:"Polar Vision", expiry:"11 déc. 2026", status:"ok"},
     ]},
   {title:"Le Dernier Ferry", year:2018, genre:"Drame", territories:["Amérique Latine"], nextExpiry:"27 oct. 2026", status:"warn",
     rights:[{territory:"Amérique Latine", media:"SVOD", licensee:"Andes Films", expiry:"27 oct. 2026", status:"warn"}]},
   {title:"Chambre 12", year:2024, genre:"Thriller", territories:["France","Allemagne","Italie"], nextExpiry:"09 avr. 2028", status:"ok",
     rights:[
-      {territory:"France", media:"Théâtrique", licensee:"Le Films du Losange", expiry:"—", status:"ok"},
+      {territory:"France", media:"Théâtrique", licensee:"Les Films du Losange", expiry:"—", status:"ok"},
       {territory:"Allemagne", media:"VOD", licensee:"CineWave GmbH", expiry:"09 avr. 2028", status:"ok"},
       {territory:"Italie", media:"TV", licensee:"Panorama Distribuzione", expiry:"22 juil. 2027", status:"ok"},
     ]},
@@ -970,7 +970,7 @@ function generateReminderEmail(facture, rawKeywords){
   );
   lines.push("");
   lines.push("Cordialement,");
-  lines.push("Le service facturation — Le Films du Losange");
+  lines.push("Le service facturation — Les Films du Losange");
 
   return { subject, body: lines.join("\n") };
 }
@@ -1025,7 +1025,7 @@ function openInvoiceDrawer(contract){
   document.getElementById("drawer-title").textContent = "Facture — " + contract.film;
   document.getElementById("drawer-sub").textContent = "Générée automatiquement à partir du contrat · à vérifier avant envoi";
   const rows = [
-    {label:"Émetteur", value:"Le Films du Losange"},
+    {label:"Émetteur", value:"Les Films du Losange"},
     {label:"Destinataire", value:contract.tiers},
     {label:"Contrat de référence", value:contract.ref},
     {label:"Montant", value:contract.amount},

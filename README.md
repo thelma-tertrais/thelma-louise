@@ -1,15 +1,14 @@
 # Thelma & Louise
 
-ERP interne de gestion des droits et de la distribution pour Le Films du Losange.
+ERP interne de gestion des droits et de la distribution pour Les Films du Losange.
 
-Ce dépôt documente la conception et le développement progressif d'un outil destiné à
-remplacer, module par module, le système actuel (AVEDIS).
+Ce dépôt documente la conception et le développement progressif de l'outil.
 
 ## Statut actuel
 
 **Phase 0 — Cadrage & maquettage.** La maquette interactive couvre désormais 7
 modules (Tableau de bord, Films & droits, Contrats, Ventes, Festivals, Matériels,
-Subventions) pour présentation à l'équipe. Aucun code applicatif réel n'existe
+Subventions). Aucun code applicatif réel n'existe
 encore : la maquette est en HTML/CSS/JS statique, avec des données fictives, pour
 valider le concept avant le développement.
 
