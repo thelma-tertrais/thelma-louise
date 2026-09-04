@@ -3,24 +3,23 @@
 ## Non publié
 
 ### Ajouté
-- `mockups/v4-dashboard.html` : les lignes de Contrats sont cliquables et ouvrent un
-  tiroir de détail (licencié, territoire, support, montant, échéance, signature) ;
-  bouton "Générer une facture" qui bascule vers l'aperçu de facture, avec retour
-  possible au contrat
-- `exemples/contrat-exemple.pdf` + `exemples/extraction_contrat.py` : exemple
-  fonctionnel d'extraction de données depuis un contrat PDF fictif (regex),
-  utilisé comme preuve de concept pour le module de facturation automatique
-- Le contrat "Chambre 12 / CineWave GmbH" dans la maquette est relié à cet exemple
-  (mention "document source" dans son tiroir de détail)
+- `mockups/v5-dashboard.html` :
+  - Le contrat "Chambre 12" a un lien "contrat-exemple.pdf" cliquable dans son
+    tiroir de détail, qui ouvre le vrai PDF (embarqué en base64 dans le fichier,
+    donc la maquette reste autonome, un seul fichier à partager)
+  - Le bouton de la facture générée télécharge un vrai PDF (via jsPDF, chargé
+    depuis un CDN), mis en forme et rempli avec les données du contrat
 
 ### Note de portée
-- L'extraction par regex démontrée dans `exemples/` est fragile : elle dépend de la
-  formulation exacte de ce contrat précis. Une extraction robuste sur des contrats
-  hétérogènes nécessitera une approche par LLM plutôt que des regex fixes.
-- La lecture automatique de contrats réels et l'envoi de relances par email restent
-  du développement backend réel (phase 2/3 de la roadmap), pas de la maquette.
+- Le PDF de facture généré ici est un gabarit simple pour la démo — la vraie
+  version en production devra respecter les mentions légales obligatoires sur les
+  factures françaises (numéro de TVA, mentions de pénalités de retard, etc.)
 
 ## Précédent
+
+### v4
+- Tiroir contrat cliquable avec détail complet, navigation contrat → facture
+- Exemple fonctionnel d'extraction de contrat PDF (`exemples/`)
 
 ### v3
 - Facturation automatique depuis les contrats (bouton isolé) + suivi des factures
