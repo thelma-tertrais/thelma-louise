@@ -30,7 +30,7 @@ thelma-louise-erp/
 
 ## Voir la maquette
 
-Ouvrir `https://thelma-tertrais.github.io/thelma-louise/mockups/v8-dashboard.html` directement dans un navigateur — aucune
+Ouvrir `mockups/v9-dashboard.html` directement dans un navigateur — aucune
 installation nécessaire.
 
 ## Modules prévus
