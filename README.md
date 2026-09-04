@@ -7,11 +7,11 @@ remplacer, module par module, le système actuel (AVEDIS).
 
 ## Statut actuel
 
-**Phase 0 — Cadrage & maquettage.** Une première maquette interactive du tableau de
-bord et de trois modules (Films & droits, Ventes, Festivals) a été produite pour
-présentation à l'équipe. Aucun code applicatif réel n'existe encore : la maquette est
-en HTML/CSS/JS statique, avec des données fictives, pour valider le concept avant le
-développement.
+**Phase 0 — Cadrage & maquettage.** La maquette interactive couvre désormais 7
+modules (Tableau de bord, Films & droits, Contrats, Ventes, Festivals, Matériels,
+Subventions) pour présentation à l'équipe. Aucun code applicatif réel n'existe
+encore : la maquette est en HTML/CSS/JS statique, avec des données fictives, pour
+valider le concept avant le développement.
 
 Voir [`docs/roadmap.md`](docs/roadmap.md) pour le plan complet et
 [`CHANGELOG.md`](CHANGELOG.md) pour l'historique des avancées.
@@ -25,12 +25,13 @@ thelma-louise-erp/
 ├── docs/
 │   └── roadmap.md        # roadmap détaillée, modules, priorités
 └── mockups/
-    └── v1-dashboard.html # maquette interactive (ouvrir dans un navigateur)
+    ├── v1-dashboard.html # première version (4 modules)
+    └── v2-dashboard.html # version actuelle (7 modules)
 ```
 
 ## Voir la maquette
 
-Ouvrir `mockups/v1-dashboard.html` directement dans un navigateur — aucune
+Ouvrir `mockups/v2-dashboard.html` directement dans un navigateur — aucune
 installation nécessaire.
 
 ## Modules prévus
