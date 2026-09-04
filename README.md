@@ -30,7 +30,7 @@ thelma-louise-erp/
 
 ## Voir la maquette
 
-Voir [`mockups/v3-dashboard.html`](https://thelma-tertrais.github.io/thelma-louise/mockups/v9-dashboard.html)
+Voir [`mockups/v3-dashboard.html`](https://thelma-tertrais.github.io/thelma-louise/mockups/v3-dashboard.html)
 pour la maquette interactive (ouvre la version rendue via GitHub Pages).
 
 Ou en local : ouvrir `mockups/v9-dashboard.html` directement dans un navigateur —
