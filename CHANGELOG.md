@@ -3,19 +3,28 @@
 ## Non publié
 
 ### Ajouté
-- `mockups/v3-dashboard.html` : nouvelle section "Suivi des factures" (référence,
-  montant, échéance, statut de paiement, historique/prochaine relance)
-- Sur chaque contrat : bouton "Générer une facture" qui ouvre un aperçu de facture
-  pré-rempli à partir des données du contrat (maquette uniquement — pas de vraie
-  génération ni d'envoi)
+- `mockups/v4-dashboard.html` : les lignes de Contrats sont cliquables et ouvrent un
+  tiroir de détail (licencié, territoire, support, montant, échéance, signature) ;
+  bouton "Générer une facture" qui bascule vers l'aperçu de facture, avec retour
+  possible au contrat
+- `exemples/contrat-exemple.pdf` + `exemples/extraction_contrat.py` : exemple
+  fonctionnel d'extraction de données depuis un contrat PDF fictif (regex),
+  utilisé comme preuve de concept pour le module de facturation automatique
+- Le contrat "Chambre 12 / CineWave GmbH" dans la maquette est relié à cet exemple
+  (mention "document source" dans son tiroir de détail)
 
 ### Note de portée
-- La lecture automatique de contrats (extraction de données depuis un PDF) et
-  l'envoi réel de relances par email ne sont pas dans la maquette : ce sont des
-  fonctionnalités backend réelles à construire (extraction de documents + moteur de
-  facturation + automatisation email), prévues en phase 2/3 de la roadmap.
+- L'extraction par regex démontrée dans `exemples/` est fragile : elle dépend de la
+  formulation exacte de ce contrat précis. Une extraction robuste sur des contrats
+  hétérogènes nécessitera une approche par LLM plutôt que des regex fixes.
+- La lecture automatique de contrats réels et l'envoi de relances par email restent
+  du développement backend réel (phase 2/3 de la roadmap), pas de la maquette.
 
 ## Précédent
+
+### v3
+- Facturation automatique depuis les contrats (bouton isolé) + suivi des factures
+  et relances
 
 ### v2
 - Trois nouveaux modules : Contrats, Matériels (servicing), Subventions
