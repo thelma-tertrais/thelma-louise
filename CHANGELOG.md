@@ -3,19 +3,26 @@
 ## Non publié
 
 ### Ajouté
-- `mockups/v5-dashboard.html` :
-  - Le contrat "Chambre 12" a un lien "contrat-exemple.pdf" cliquable dans son
-    tiroir de détail, qui ouvre le vrai PDF (embarqué en base64 dans le fichier,
-    donc la maquette reste autonome, un seul fichier à partager)
-  - Le bouton de la facture générée télécharge un vrai PDF (via jsPDF, chargé
-    depuis un CDN), mis en forme et rempli avec les données du contrat
+- `mockups/v7-dashboard.html` : les lignes de "Suivi des factures" sont cliquables
+  et ouvrent un tiroir avec :
+  - une timeline verticale des étapes (émission, envoi, rappels, échéance,
+    relances, paiement), avec l'étape en cours mise en évidence
+  - un interrupteur "Relance automatique" (activable/désactivable), avec un texte
+    qui se met à jour en direct selon l'état
 
 ### Note de portée
-- Le PDF de facture généré ici est un gabarit simple pour la démo — la vraie
-  version en production devra respecter les mentions légales obligatoires sur les
-  factures françaises (numéro de TVA, mentions de pénalités de retard, etc.)
+- L'interrupteur est purement visuel dans la maquette (état gardé en mémoire le
+  temps de la session, pas persisté). La vraie automatisation des relances (envoi
+  d'email programmé) reste un développement backend réel — phase 6 de la roadmap.
 
 ## Précédent
+
+### v6
+- Fix : ouverture du PDF du contrat via Blob au lieu d'une data URI directe
+
+### v5
+- PDF du contrat consultable depuis le tiroir (embarqué en base64)
+- Génération d'un vrai PDF de facture (jsPDF) depuis les données du contrat
 
 ### v4
 - Tiroir contrat cliquable avec détail complet, navigation contrat → facture
