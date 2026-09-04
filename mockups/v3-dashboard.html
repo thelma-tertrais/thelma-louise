@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Thelma &amp; Louise — Les Films du Losange</title>
+<title>Thelma &amp; Louise — Le Films du Losange</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -225,6 +225,21 @@
 
   .row2{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start;}
 
+  /* Dashboard timeline (frise chronologique) */
+  .dash-timeline{padding:26px 20px 18px;overflow-x:auto;}
+  .dash-timeline-track{display:flex;position:relative;min-width:max-content;}
+  .dash-timeline-track::before{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:var(--line);}
+  .dash-timeline-item{position:relative;flex:0 0 178px;padding:0 16px;}
+  .dash-timeline-dot{width:12px;height:12px;border-radius:50%;position:absolute;top:0;left:16px;border:3px solid var(--surface);background:var(--ink-faint);}
+  .dash-timeline-dot.warn{background:var(--amber);}
+  .dash-timeline-dot.bad{background:var(--red);}
+  .dash-timeline-dot.ok{background:var(--green);}
+  .dash-timeline-type{font-size:10.5px;text-transform:uppercase;letter-spacing:0.05em;color:var(--ink-faint);font-weight:700;margin-top:22px;}
+  .dash-timeline-date{font-size:12px;color:var(--ink-dim);margin-top:3px;font-weight:600;}
+  .dash-timeline-title{font-size:13px;font-weight:700;margin-top:7px;color:var(--ink);line-height:1.3;}
+  .dash-timeline-sub{font-size:11.5px;color:var(--ink-dim);margin-top:3px;}
+  .dash-timeline-empty{font-size:13px;color:var(--ink-dim);padding:4px 0 2px;}
+
   .panel{
     background:var(--surface);
     border-radius:14px;
@@ -433,7 +448,7 @@
         </div>
         <span class="brand-name">Thelma &amp; Louise</span>
       </div>
-      <div class="brand-sub">Gestion des droits pour Les Films du Losange</div>
+      <div class="brand-sub">Gestion des droits pour Le Films du Losange</div>
     </div>
     <nav class="nav">
       <div class="nav-group">
@@ -521,6 +536,13 @@
           <div class="stat"><div class="stat-num warn">7</div><div class="stat-label">Droits expirant sous 30 jours</div></div>
           <div class="stat"><div class="stat-num">€142 300</div><div class="stat-label">Chiffre d'affaires du mois</div></div>
           <div class="stat"><div class="stat-num">3</div><div class="stat-label">Festivals en cours</div></div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px;">
+          <div class="panel-head"><h2>Prochaines échéances</h2><span class="tag">Droits, festivals, factures</span></div>
+          <div class="dash-timeline">
+            <div class="dash-timeline-track" id="dash-timeline-track"></div>
+          </div>
         </div>
 
         <div class="row2">
@@ -810,6 +832,61 @@ function pill(status, label){
   return `<span class="pill ${status}"><span class="pill-dot"></span>${label}</span>`;
 }
 const statusLabel = {ok:"Actif", warn:"Échéance proche", bad:"Expiré"};
+
+const FR_MONTHS = {"janv":0,"févr":1,"mars":2,"avr":3,"mai":4,"juin":5,"juil":6,"août":7,"sept":8,"oct":9,"nov":10,"déc":11};
+
+function parseFrDate(str){
+  if(!str || str === "—") return null;
+  const parts = str.trim().split(" ");
+  if(parts.length < 3) return null;
+  const day = parseInt(parts[0], 10);
+  const month = FR_MONTHS[parts[1].replace(".", "")];
+  const year = parseInt(parts[2], 10);
+  if(month === undefined || isNaN(day) || isNaN(year)) return null;
+  return new Date(year, month, day);
+}
+
+function buildDashboardTimeline(){
+  const events = [];
+  films.forEach(f=>{
+    f.rights.forEach(r=>{
+      if(r.status !== "ok" && r.expiry !== "—"){
+        const d = parseFrDate(r.expiry);
+        if(d) events.push({date:d, dateStr:r.expiry, type:"Droit", status:r.status, title:f.title, sub:r.territory + " · " + r.licensee});
+      }
+    });
+  });
+  festivals.forEach(f=>{
+    const d = parseFrDate(f.date);
+    if(d) events.push({date:d, dateStr:f.date, type:"Festival", status:f.status, title:f.name, sub:f.film});
+  });
+  factures.forEach(f=>{
+    if(f.status !== "ok"){
+      const d = parseFrDate(f.due);
+      if(d) events.push({date:d, dateStr:f.due, type:"Facture", status:f.status, title:f.ref, sub:f.film});
+    }
+  });
+  events.sort((a,b)=>a.date - b.date);
+  return events.slice(0, 10);
+}
+
+function renderDashboardTimeline(){
+  const events = buildDashboardTimeline();
+  const track = document.getElementById("dash-timeline-track");
+  if(!events.length){
+    track.innerHTML = `<div class="dash-timeline-empty">Aucune échéance à venir.</div>`;
+    return;
+  }
+  track.innerHTML = events.map(e=>`
+    <div class="dash-timeline-item">
+      <div class="dash-timeline-dot ${e.status}"></div>
+      <div class="dash-timeline-type">${e.type}</div>
+      <div class="dash-timeline-date">${e.dateStr}</div>
+      <div class="dash-timeline-title">${e.title}</div>
+      <div class="dash-timeline-sub">${e.sub}</div>
+    </div>
+  `).join("");
+}
 
 function renderDashboard(){
   const urgent = films.filter(f=>f.status!=="ok").slice(0,5).flatMap(f=>
@@ -1306,6 +1383,7 @@ document.querySelectorAll(".nav-item").forEach(btn=>{
 });
 
 renderDashboard();
+renderDashboardTimeline();
 renderCatalogue();
 renderVentes();
 renderFestivals();
